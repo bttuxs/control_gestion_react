@@ -1,52 +1,26 @@
-import React from 'react';
+import React, {useContext}  from 'react';
 import { NotificationContext } from '../../Provider/Notification/NotificactionContextProvider'
 
-
-class Alert extends React.Component{
-    static contextType = NotificationContext
-    timeOut = null
-    alertSelect = ""
-    typeAlert = {
+const Alert = props => {
+    const {isGlobalAlertOn, setGlobalAlert} = useContext(NotificationContext)
+    const typeAlert = {
         success : "text-green-700 bg-green-100 dark:bg-green-200 dark:text-green-800",
         info: "text-blue-700 bg-blue-100 dark:bg-blue-200 dark:text-blue-800",
         error: "text-red-700 bg-red-100 dark:bg-red-200 dark:text-red-800",
     }
-
-    constructor(props){
-        super(props)
-        this.state = {
-            show: true,
-            type: "success",
-            message: ""
-        }
-        this.visible = this.visible.bind(this)
-        this.alertSelect = this.typeAlert.info
+    const alertSelect = typeAlert[isGlobalAlertOn.type]
+    let timer = null;
+    if(isGlobalAlertOn.show){
+        
+        // eslint-disable-next-line no-unused-vars
+        timer = setTimeout(() => {
+            setGlobalAlert(false)
+            console.log('ocultar')
+        }, 5000)     
     }
-
-    visible(show){
-        this.setState({show})
-    }
-
-    componentWillReceiveProps(nextProps) {
-        this.setState(nextProps)
-        if(!nextProps.show){
-            this.startCount()
-        }
-        if(nextProps.type){
-            this.alertSelect = this.typeAlert[nextProps.type];
-        }
-    }
-
-    startCount(){
-        setTimeout(() => {
-            this.setState({show: true})
-        }, 5000)
-    }
-
-    render(){
-        return <div hidden={this.state.show} className={"transition duration-150 ease-out float absolute p-4 mb-4 text-sm rounded-lg "+this.alertSelect} role="alert">
-        <span className="font-medium">{this.state.message}</span>
-      </div>
-    }
+    return isGlobalAlertOn.show? <div hidden={!isGlobalAlertOn.show} className={"transition duration-150 ease-out float absolute p-4 mb-4 text-sm rounded-lg "+alertSelect} role="alert">
+    <span className="font-medium">{isGlobalAlertOn.message}</span>
+  </div>:null
 }
+
 export default Alert;
