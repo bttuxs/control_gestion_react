@@ -15,7 +15,6 @@ const Alert = props => {
         // eslint-disable-next-line no-unused-vars
         timer = setTimeout(() => {
             setGlobalAlert(false)
-            console.log('ocultar')
         }, 5000)     
     }
     return isGlobalAlertOn.show? <div hidden={!isGlobalAlertOn.show} className={"transition duration-150 ease-out float absolute p-4 mb-4 text-sm rounded-lg "+alertSelect} role="alert">
