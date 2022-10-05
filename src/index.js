@@ -4,35 +4,38 @@ import './index.css';
 import {
   BrowserRouter,
   Routes,
-  Route,
+  Route
 } from "react-router-dom";
-import Login from './Login/Login'
-import Main from './Main/Main'
-import Dashboard from './Dashboard/Dashboard';
-import CrearDocumento from './Documento/CrearDocumento'
-import LoaderContextProvider from './Provider/Notification/NotificactionContextProvider' 
 import NotificationContextProvider from './Provider/Notification/NotificactionContextProvider';
-import Loader from './components/Loader/Loader';
-import Alert from './components/Alert/Alert';
+import Loader from 'src/components/Loader/Loader';
+import Alert from 'src/components/Alert/Alert';
+import LoaderStatic from 'src/components/Loader/LoaderStatic';
 import reportWebVitals from './reportWebVitals';
+
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fas } from '@fortawesome/free-solid-svg-icons'
+import RouterMain from './Main/MainRouter';
+
+library.add(fas)
+
+const LoginComponent = React.lazy(() => import('./Login/Login'));
+
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
     <NotificationContextProvider>
       <Loader />
       <Alert />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/main" element={<Main />}>
-            <Route path="" element={<Dashboard />} />
-            <Route path="crear" element={<CrearDocumento />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <React.Suspense fallback={<LoaderStatic />}>
+        <BrowserRouter>
+          <Routes>
+            <Route exact path="/" element={<LoginComponent />} />
+            { RouterMain }
+          </Routes>
+        </BrowserRouter>
+      </React.Suspense>
     </NotificationContextProvider>
-  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

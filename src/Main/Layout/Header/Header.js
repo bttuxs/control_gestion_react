@@ -7,7 +7,7 @@ class Header extends React.Component{
                 Control de Gestion
                 <div className="flex absolute top-3 right-1 r-0 p-1">
                     <button type="button" className="mr-4 text-sm md:mr-0 cursor-pointer" aria-expanded="false">
-                        <img className="w-10 h-10 " src="/assets/icons/exit.svg" alt="user photo" />
+                        <img className="w-10 h-10 " src="/assets/icons/exit.svg" alt=""/>
                     </button>
                 </div>
             </header>

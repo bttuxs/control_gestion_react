@@ -1,24 +1,21 @@
-import { type } from "@testing-library/user-event/dist/type";
 import axios from "axios"
 const urlBase = process.env.REACT_APP_BASE_PATH
 
-function objToQueryString(obj) {
-    var str = [];
-    for (var p in obj)
-      if (obj.hasOwnProperty(p)) {
-        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-      }
-    return str.join("&");
-  }
-
-export const http = {
+export const httpClient = {
     get: (path, params) => {
         let url = urlBase+path
-        /*
-        if(typeof params == 'object' && Object.keys(params).length > 0){
-            url = url+"?"+objToQueryString(params)
-        }
-        */
         return axios.get(url,{params})
+    },
+    post: (path, params) => {
+      let url = urlBase+path
+      return axios.post(url,params)
+    },
+    delete: (path, params) => {
+      let url = urlBase+path
+      return axios.delete(url,{params})
+    },
+    put: (path, params) => {
+      let url = urlBase+path
+      return axios.put(url,{params})
     },
 }
